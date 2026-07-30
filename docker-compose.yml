@@ -1,0 +1,32 @@
+services:
+  backend:
+    build: ./backend
+    container_name: ai-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend:/app
+      - ./backend/chromadb:/app/chromadb
+      - ./backend/documents:/app/documents
+      - ./backend/datasets:/app/datasets
+      - ./backend/database.db:/app/database.db
+    restart: unless-stopped
+
+  frontend:
+    build: ./frontend
+    container_name: ai-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - WATCHPACK_POLLING=true
+    # No host mounts so the container uses the image-built files
+    # Keep node_modules inside the image (no runtime volume)
+    restart: unless-stopped           
+
+volumes:
+  node_modules:
+   

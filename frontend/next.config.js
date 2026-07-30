@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${process.env.BACKEND_URL || 'http://127.0.0.1:8000'}/:path*`,
+        destination: 'https://ai-chatbot-production-d2d5.up.railway.app/:path*',
       },
     ];
   },

@@ -211,12 +211,12 @@ Rules:
     answer = llm.invoke(final_prompt).content
     print("Final:", time.time() - t)
 
-    if len(steps) == 1:
-        return {
-            "tool": steps[0]["tool"],
-            "answer": answer,
-            "sql": sql_query if sql_query else None,
-            "documents": rag_context if rag_context else None,
-        }
+    tools_used = list(dict.fromkeys(step["tool"] for step in steps))
 
-    return {"tool": ["RAG","SQL"], "answer": answer, "steps": steps, "sql": sql_query ,"documents": rag_context}
+    return {
+     "tool": tools_used if len(tools_used) > 1 else tools_used[0],
+     "answer": answer,
+     "sql": sql_query if sql_query else None,
+     "documents": rag_context if rag_context else None,
+     "steps": steps if len(tools_used) > 1 else None,
+     }

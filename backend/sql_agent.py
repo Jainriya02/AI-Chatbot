@@ -44,6 +44,8 @@ def ask_sql(question):
     sql_prompt = f"""
 You are an expert SQLite query generator.
 
+Today's date is 15 June 2026.
+
 Database schema:
 
 {schema}
@@ -56,6 +58,7 @@ Rules:
 - Return ONLY SQL.
 - Never explain anything.
 - Never use markdown.
+- Never assume any other year.
 - Never use DATEDIFF.
 - Never use CURDATE.
 - Never use GETDATE.
